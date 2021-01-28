@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="phoneDecrese" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="phoneQuentity" type="text" class="form-control text-center" value="1">
+                           <button id="phoneIncrese" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5 id="phonePrice"> $1219</h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="caseDecrese" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="caseQuentity" type="text" class="form-control text-center" value="1">
+                           <button id="caseIncrese" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5 id="casePrice">$59</h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5 id="allPrice">$1,278</h5>
+                        <h5 id="taxAmount">$0</h5>
+                        <h5 id="result">$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      document.getElementById("phoneIncrese").addEventListener("click", function () {
+         increseToDecresePhone(true);
+         calculateTotal();
+         display()
+      })
+      document.getElementById("phoneDecrese").addEventListener("click", function () {
+         increseToDecresePhone(false);
+         calculateTotal();
+         display()
+      })
+      document.getElementById("caseIncrese").addEventListener("click", function () {
+         increseToDecresecase(true);
+         calculateTotal();
+         display()
+      })
+      document.getElementById("caseDecrese").addEventListener("click", function () {
+         increseToDecresecase(false);
+         calculateTotal();
+         display()
+      })
+
+      function increseToDecresecase(isIncrese) {
+         var quentityString = document.getElementById("caseQuentity");
+         var quentityNumber = parseFloat(quentityString.value);
+         var countNumber = quentityNumber;
+         if (isIncrese == true) {
+            var countNumber = quentityNumber + 1;
+         }
+         if (isIncrese == false && countNumber > 0) {
+            var countNumber = quentityNumber - 1;
+         }
+         document.getElementById("caseQuentity").value = countNumber;
+         var totalAmount = countNumber * 59;
+         document.getElementById("casePrice").innerText = "$" + totalAmount;
+
+      }
+
+      function increseToDecresePhone(isIncrese) {
+         var quentityString = document.getElementById("phoneQuentity");
+         var quentityNumber = parseFloat(quentityString.value);
+         var countNumber = quentityNumber;
+         if (isIncrese == true) {
+            var countNumber = quentityNumber + 1;
+         }
+         if (isIncrese == false && countNumber > 0) {
+            var countNumber = quentityNumber - 1;
+         }
+         document.getElementById("phoneQuentity").value = countNumber;
+         var totalAmount = countNumber * 1219;
+         document.getElementById("phonePrice").innerText = "$" + totalAmount;
+
+      }
+
+      function calculateTotal() {
+         var inputPhone = document.getElementById("phoneQuentity");
+         var phoneCount = parseFloat(inputPhone.value);
+         var inputCase = document.getElementById("caseQuentity");
+         var caseCount = parseFloat(inputCase.value);
+         var totalPrice = (phoneCount * 1219) +( caseCount * 59);
+         var tax = (totalPrice * 0.1).toFixed(2);
+         document.getElementById("allPrice").innerText = '$' + totalPrice;
+         document.getElementById("taxAmount").innerText = '$' + tax;
+
+      }
+      function display(){
+         var phone = document.getElementById("phoneQuentity").value;
+         var phoneNum = parseFloat(phone);
+         var totalPhoneCost = phoneNum * 1219;
+         var casee = document.getElementById("caseQuentity").value;
+         var caseNum = parseFloat(casee);
+         var totalCaseCost = caseNum * 59;
+         var phoneCase = totalCaseCost + totalPhoneCost;
+         var lastTax = parseFloat(phoneCase * 0.1);
+         var lastResult = lastTax + phoneCase;
+         console.log(lastResult);
+         document.getElementById("result").innerText = '$'+ lastResult;
+      }
+
+     
+
+
+
+
+
+
+
+
+
+      // document.getElementById("phoneIncrese").addEventListener("click",function(){
+      //    var quentityString = document.getElementById("phoneQuentity");
+      //    var quentityNumber = parseFloat(quentityString.value);
+      //    var countNumber = quentityNumber + 1;
+      //    document.getElementById("phoneQuentity").value = countNumber;
+      //    var totalAmount = countNumber * 1219;
+      //    document.getElementById("phonePrice").innerText = "$" + totalAmount;
+      // })
+   </script>
+</body>
+
+</html>
